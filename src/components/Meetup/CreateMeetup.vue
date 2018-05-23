@@ -2,7 +2,7 @@
    <v-container>
      <v-layout row>
        <v-flex xs12 sm6 offset-sm3>
-         <h2 class="primary--text">Create a new meetup</h2>
+         <h2 class="primary--text">새로운 모임 만들기</h2>
        </v-flex>
      </v-layout>
      <v-layout row>
@@ -12,7 +12,7 @@
              <v-flex xs12 sm6 offset-sm3>
                <v-text-field
                  name="title"
-                 label="title"
+                 label="주제"
                  id="title"
                  v-model="title"
                  required></v-text-field>
@@ -22,9 +22,32 @@
              <v-flex xs12 sm6 offset-sm3>
                <v-text-field
                  name="location"
-                 label="location"
+                 label="장소"
                  id="location"
                  v-model="location"
+                 placeholder="주소 및 건물이름을 입력해주세요."
+                 required></v-text-field>
+             </v-flex>
+           </v-layout>
+           <v-layout row>
+             <v-flex xs12 sm6 offset-sm3>
+               <v-text-field
+                 name="date"
+                 label="날짜"
+                 id="date"
+                 v-model="date"
+                 placeholder="예시: 2018-05-25"
+                 required></v-text-field>
+             </v-flex>
+           </v-layout>
+           <v-layout row>
+             <v-flex xs12 sm6 offset-sm3>
+               <v-text-field
+                 name="time"
+                 label="시간"
+                 id="time"
+                 v-model="time"
+                 placeholder="예시: 01:30 PM"
                  required></v-text-field>
              </v-flex>
            </v-layout>
@@ -32,7 +55,7 @@
              <v-flex xs12 sm6 offset-sm3>
                <v-text-field
                  name="imageUrl"
-                 label="imageUrl"
+                 label="이미지"
                  id="imageUrl"
                  v-model="imageUrl"
                  required></v-text-field>
@@ -47,42 +70,37 @@
              <v-flex xs12 sm6 offset-sm3>
                <v-text-field
                  name="description"
-                 label="description"
+                 label="상세정보"
                  id="description"
                  v-model="description"
                  multi-line
                  required></v-text-field>
              </v-flex>
            </v-layout>
-           <v-layout row class="mb-2">
-             <v-flex xs12 sm6 offset-sm3>
-               <h3>날짜와 시간 선택</h3>
-             </v-flex>
-           </v-layout>
-           <v-layout row class="mb-2">
-             <v-flex xs12 sm6 offset-sm3>
-               <v-date-picker
-                 v-model="date"
-               ></v-date-picker>
-               <p>{{ date }}</p>
-             </v-flex>
-           </v-layout>
-           <v-layout row>
-             <v-flex xs12 sm6 offset-sm3>
-               <v-time-picker
-                 v-model="time"
-               ></v-time-picker>
-               <p>{{ time }}</p>
-             </v-flex>
-           </v-layout>
+
+           <!--<v-layout row class="mb-2">-->
+             <!--<v-flex xs12 sm6 offset-sm3>-->
+               <!--<v-date-picker-->
+                 <!--v-model="date"-->
+               <!--&gt;</v-date-picker>-->
+               <!--<p>{{ date }}</p>-->
+             <!--</v-flex>-->
+           <!--</v-layout>-->
+           <!--<v-layout row>-->
+             <!--<v-flex xs12 sm6 offset-sm3>-->
+               <!--<v-time-picker-->
+                 <!--v-model="time"-->
+               <!--&gt;</v-time-picker>-->
+               <!--<p>{{ time }}</p>-->
+             <!--</v-flex>-->
+           <!--</v-layout>-->
            <v-layout row>
              <v-flex xs12 sm6 offset-sm3>
                <v-btn
-                 class="primary"
+                 class="primary ma-0"
                  :disabled="!formIsValid"
                  type="submit"
-               >Create Meetup</v-btn>
-               {{ submitTableDateTime }}
+               >모임 만들기</v-btn>
              </v-flex>
            </v-layout>
          </form>
@@ -99,33 +117,34 @@
         location: '',
         imageUrl: '',
         description: '',
-        date: null,
-        time: new Date()
+        date: '',
+        time: ''
       }
     },
     computed: {
       formIsValid () {
         return this.title !== '' &&
           this.location !== '' &&
+          this.date !== '' &&
+          this.time !== '' &&
           this.imageUrl !== '' &&
           this.description !== ''
-      },
-      submitTableDateTime () {
-        const date = new Date()
-        console.log(date)
-        if (typeof this.time === 'string') {
-          const hours = this.time.match(/^(|d+)/)[1]
-          const minutes = this.time.match(/:(|d+)/)[1]
-          date.setHours(hours)
-          date.setMinutes(minutes)
-        } else {
-          date.setHours(this.time.getHours())
-          date.setMinutes(this.time.getMinutes())
-        }
-
-        console.log(date)
-        return date
       }
+      // submitTableDateTime () {
+      //   const date = new Date(this.date)
+      //   if (typeof this.time === 'string') {
+      //     const hours = this.time.match(/^(|d+)/)[1]
+      //     const minutes = this.time.match(/:(|d+)/)[1]
+      //     date.setHours(hours)
+      //     date.setMinutes(minutes)
+      //   } else {
+      //     date.setHours(this.time.getHours())
+      //     date.setMinutes(this.time.getMinutes())
+      //   }
+      //
+      //   console.log(date)
+      //   return date
+      // }
     },
     methods: {
       onCreateMeetup () {
@@ -135,9 +154,10 @@
         const meetupData = {
           title: this.title,
           location: this.location,
+          date: this.date,
+          time: this.time,
           imageUrl: this.imageUrl,
-          description: this.description,
-          date: new Date()
+          description: this.description
         }
         this.$store.dispatch('createMeetup', meetupData)
         this.$router.push('/meetups/')

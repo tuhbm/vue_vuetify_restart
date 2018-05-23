@@ -20,13 +20,13 @@
                 <v-card-title class="text-lg-left">
                   <div>
                     <h2 class="white--text mb-0">{{ meetup.title }}</h2>
-                    <div>{{ meetup.date }}</div>
+                    <div>{{ meetup.date }}   [ {{ meetup.time }} ]</div>
                   </div>
                 </v-card-title>
                 <v-card-actions>
                   <v-btn flat :to="'/meetups/' + meetup.id">
                     <v-icon left light>arrow_forward</v-icon>
-                    View Meetup
+                    모임 상세보기
                   </v-btn>
                 </v-card-actions>
               </v-flex>
