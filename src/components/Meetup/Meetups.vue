@@ -42,7 +42,7 @@
   export default {
     computed: {
       meetups () {
-        return this.$store.getters.loadedMeetupsAlign
+        return this.$store.getters.loadedMeetups
       }
     }
   }

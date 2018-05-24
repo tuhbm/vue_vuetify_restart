@@ -51,7 +51,6 @@
   export default {
     computed: {
       meetups () {
-        console.log(this.$store.getters.featureMeetups)
         return this.$store.getters.featureMeetups
       },
       loading () {

@@ -7,6 +7,8 @@ import 'vuetify/dist/vuetify.min.css'
 import colors from 'vuetify/es5/util/colors'
 import * as firebase from 'firebase'
 import AlertCmp from './components/Shared/Alert'
+import editMeetupDetailsDialog from './components/Meetup/Edit/EditMeetupDetailsDialog'
+import RegisterDialog from './components/Meetup/Registration/RegisterDialog'
 
 Vue.use(Vuetify, {
   theme: {
@@ -16,6 +18,8 @@ Vue.use(Vuetify, {
   }
 })
 Vue.component('app-alert', AlertCmp)
+Vue.component('app-edit-meetup-details-dialog', editMeetupDetailsDialog)
+Vue.component('app-meetup-register-dialog', RegisterDialog)
 
 Vue.config.productionTip = false
 
@@ -31,11 +35,12 @@ new Vue({
       authDomain: 'meetup-78b46.firebaseapp.com',
       databaseURL: 'https://meetup-78b46.firebaseio.com',
       projectId: 'meetup-78b46',
-      storageBucket: ''
+      storageBucket: 'gs://meetup-78b46.appspot.com/'
     })
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$store.dispatch('autoSignIn', user) // 로그인 유지하기
+        this.$store.dispatch('fetchUserData') // 로그인 유지하기
       }
     })
     this.$store.dispatch('loadMeetups')

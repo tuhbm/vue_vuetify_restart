@@ -74,8 +74,8 @@ export default {
       if (this.userIsAuthenticated) {
         menuItems = [
           { icon: 'supervisor_account', title: '모임 둘러보기', link: '/meetups' },
-          { icon: 'room', title: '모임 만들기', link: '/meetup/new' },
-          { icon: 'person', title: '프로필', link: '/profile' }
+          { icon: 'room', title: '모임 만들기', link: '/meetup/new' }
+          // { icon: 'person', title: '프로필', link: '/profile' }
         ]
       }
       return menuItems
